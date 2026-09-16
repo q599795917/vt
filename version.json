@@ -1,5 +1,5 @@
 {
-  "version": "v1.8",
-  "url": "https://github.com/q599795917/vt/releases/download/v1.8/VT_Tool_Setup_v1.8.exe",
-  "note": "v1.8：新增写入EXIF功能（英国/法国/德国/意大利/美国/荷兰/波兰，自动生成整套真实手机EXIF：国家当地时间前1-30分钟、GPS经纬度与海拔、iPhone机型/系统/拍摄参数）；支持选图片与选文件夹批量，文件夹内每个子文件夹独立一套EXIF且组内一致；图片裁剪支持添加EXIF。"
+  "version": "v1.9",
+  "url": "https://github.com/q599795917/vt/releases/download/v1.9/VT_Tool_Setup_v1.9.exe",
+  "note": "v1.9：修复地址管家弹窗显示（标记危险/导入确认/相似度提示强制置顶显示）；批量拖拽PDF路径自动搜索扩展；导入后自动检查与危险地址/姓名的相似度并弹窗提示（阈值可在地址管家设置调整，默认70%）；图片处理支持批量拖拽图片（裁剪/去除EXIF/写入EXIF，一次最多40张）。"
 }
