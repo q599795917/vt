@@ -1,5 +1,5 @@
 {
- "version": "v1.3",
- "url": "https://github.com/q599795917/vt/releases/download/{version}/VT_Setup_{version}.exe",
- "note": "1.2 版本：新增激活云端上报、单卡云端禁用、自助换绑（与改图软件验证方式一致）"
+  "version": "v1.8",
+  "url": "https://github.com/q599795917/vt/releases/download/v1.8/VT_Tool_Setup_v1.8.exe",
+  "note": "v1.8：新增写入EXIF功能（英国/法国/德国/意大利/美国/荷兰/波兰，自动生成整套真实手机EXIF：国家当地时间前1-30分钟、GPS经纬度与海拔、iPhone机型/系统/拍摄参数）；支持选图片与选文件夹批量，文件夹内每个子文件夹独立一套EXIF且组内一致；图片裁剪支持添加EXIF。"
 }
