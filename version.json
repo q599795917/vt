@@ -1,5 +1,5 @@
 {
-  "version": "v2.3",
-  "url": "https://github.com/q599795917/vt/releases/download/v2.3/VT_Tool_Setup_v2.3.exe",
+  "version": "v2.4",
+  "url": "https://github.com/q599795917/vt/releases/download/v2.4/VT_Tool_Setup_v2.4.exe",
   "note": "v2.3：修复Vinted查询封号状态检测（is_account_banned字段）、在售数量不准确、日志弹窗关不掉、封号不提醒不记日志；提升并发查询速度（有代理20并发）；增加卡密购买按钮；出单提醒自动轮询+系统通知；代理超时延长至20秒；修复展开输入区按钮。"
 }
