@@ -1,5 +1,5 @@
 {
-  "version": "v2.11",
-  "url": "https://github.com/q599795917/vt/releases/download/v2.11/VT_Tool_Setup_v2.11.exe",
-  "note": "v2.11：常用功能页签栏下方新增「价格计算器」按钮，点击弹窗使用；支持英镑£/欧元€/美元$，实时获取汇率，可手动修改；输入采购价、运费、手续费、利润倍数后实时计算总成本、利润、售价及建议售卖价；设置自动保存，关闭重开不丢失。"
+  "version": "v2.12",
+  "url": "https://github.com/q599795917/vt/releases/download/v2.12/VT_Tool_Setup_v2.12.exe",
+  "note": "v2.12：表格工具修复谷歌辅助邮箱+2FA链接导入；自动提取 /2FA/ 后的令牌写入2FA密钥，同时保留完整2FA网址到打开指定网址，避免完整链接错误写入2FA字段。"
 }
