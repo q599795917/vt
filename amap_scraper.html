@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高德地图商家采集工具</title>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: "Microsoft YaHei", sans-serif; background: #f0f2f5; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h1 { color: #333; font-size: 26px; }
+        .card { background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .form-item label { display: block; margin-bottom: 6px; color: #666; font-size: 14px; }
+        .form-item input, .form-item select { width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 6px; font-size: 14px; }
+        .form-item input:focus { outline: none; border-color: #1890ff; }
+        .full-width { grid-column: 1 / -1; }
+        .btn-group { display: flex; gap: 10px; }
+        button { padding: 12px 24px; border: none; border-radius: 6px; font-size: 15px; cursor: pointer; font-weight: 500; }
+        .btn-primary { background: #1890ff; color: white; }
+        .btn-success { background: #52c41a; color: white; }
+        .btn-warning { background: #faad14; color: white; }
+        button:disabled { opacity: 0.5; cursor: not-allowed; }
+        .progress-info { text-align: center; color: #666; margin: 15px 0; font-size: 14px; }
+        .result-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+        .result-table th, .result-table td { border: 1px solid #eee; padding: 8px 10px; text-align: left; }
+        .result-table th { background: #fafafa; font-weight: 600; }
+        .result-table tr:hover { background: #f5f5f5; }
+        .stats { display: flex; justify-content: space-around; margin: 15px 0; padding: 15px; background: #f0f7ff; border-radius: 8px; }
+        .stat-item { text-align: center; }
+        .stat-num { font-size: 24px; font-weight: bold; color: #1890ff; }
+        .stat-label { font-size: 12px; color: #666; margin-top: 4px; }
+        .download-btns { display: flex; gap: 10px; margin-top: 15px; }
+        .tips { background: #fffbe6; border: 1px solid #ffe58f; padding: 12px; border-radius: 6px; font-size: 13px; color: #ad6800; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>高德地图商家信息采集工具</h1>
+        </div>
+
+        <div class="card">
+            <div class="form-grid">
+                <div class="form-item full-width">
+                    <label>高德API Key（浏览器端JS API）</label>
+                    <input type="text" id="apiKey" placeholder="请输入高德开放平台JS API Key">
+                </div>
+                <div class="form-item">
+                    <label>城市</label>
+                    <input type="text" id="city" value="泉州" placeholder="如：泉州、厦门、福州">
+                </div>
+                <div class="form-item">
+                    <label>常用城市快捷选择</label>
+                    <select id="quickCity" onchange="document.getElementById('city').value=this.value">
+                        <option value="">-- 请选择 --</option>
+                        <option value="泉州">泉州</option>
+                        <option value="厦门">厦门</option>
+                        <option value="福州">福州</option>
+                        <option value="莆田">莆田</option>
+                        <option value="漳州">漳州</option>
+                        <option value="北京">北京</option>
+                        <option value="上海">上海</option>
+                        <option value="广州">广州</option>
+                        <option value="深圳">深圳</option>
+                        <option value="杭州">杭州</option>
+                    </select>
+                </div>
+                <div class="form-item">
+                    <label>搜索关键词</label>
+                    <input type="text" id="keywords" value="美食" placeholder="如：美食、酒店">
+                </div>
+                <div class="form-item">
+                    <label>最大采集页数</label>
+                    <input type="number" id="maxPages" value="20" min="1" max="50">
+                </div>
+                <div class="form-item">
+                    <label>城市限制</label>
+                    <select id="citylimit">
+                        <option value="true">只搜该城市</option>
+                        <option value="false">不限城市</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="btn-group">
+                <button class="btn-primary" id="startBtn" onclick="startSearch()">开始采集</button>
+                <button class="btn-warning" id="stopBtn" onclick="stopSearch()" disabled>停止</button>
+            </div>
+
+            <div class="progress-info" id="progressInfo">就绪</div>
+
+            <div class="stats" id="stats" style="display: none;">
+                <div class="stat-item">
+                    <div class="stat-num" id="totalNum">0</div>
+                    <div class="stat-label">总结果数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="collectedNum">0</div>
+                    <div class="stat-label">已采集</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" id="hasPhoneNum">0</div>
+                    <div class="stat-label">含电话</div>
+                </div>
+            </div>
+
+            <div class="download-btns" id="downloadBtns" style="display: none;">
+                <button class="btn-success" onclick="downloadExcel()">下载 Excel</button>
+                <button class="btn-success" onclick="downloadCSV()">下载 CSV</button>
+            </div>
+
+            <div class="tips">
+                <strong>使用说明：</strong><br>
+                1. 先去 <a href="https://lbs.amap.com/" target="_blank">高德开放平台</a> 申请「Web端(JS API)」类型的Key<br>
+                2. 在Key管理里把域名白名单加上：q599795917.github.io<br>
+                3. 输入Key、城市和关键词，点击开始采集<br>
+                4. 采集完成后点击下载按钮导出结果
+            </div>
+        </div>
+
+        <div class="card" id="resultCard" style="display: none;">
+            <h3 style="margin-bottom: 15px;">采集结果（前50条预览）</h3>
+            <div style="overflow-x: auto; max-height: 400px; overflow-y: auto;">
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>商家名称</th>
+                            <th>地址</th>
+                            <th>电话</th>
+                            <th>类目</th>
+                            <th>区域</th>
+                        </tr>
+                    </thead>
+                    <tbody id="resultBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let allResults = [];
+        let isRunning = false;
+
+        function startSearch() {
+            const key = document.getElementById('apiKey').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const keywords = document.getElementById('keywords').value.trim();
+            const maxPages = parseInt(document.getElementById('maxPages').value);
+            const citylimit = document.getElementById('citylimit').value === 'true';
+
+            if (!key) { alert('请输入API Key'); return; }
+            if (!keywords) { alert('请输入搜索关键词'); return; }
+
+            // 重新加载JS API，带上用户的Key
+            const script = document.createElement('script');
+            script.src = `https://webapi.amap.com/maps?v=2.0&key=${key}&plugin=AMap.PlaceSearch`;
+            script.onload = () => doSearch(city, keywords, maxPages, citylimit);
+            script.onerror = () => alert('Key加载失败，请检查Key是否正确（需要Web端JS API类型）');
+            document.head.appendChild(script);
+
+            document.getElementById('startBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = false;
+            allResults = [];
+            isRunning = true;
+        }
+
+        function doSearch(city, keywords, maxPages, citylimit) {
+            const placeSearch = new AMap.PlaceSearch({
+                city: city,
+                citylimit: citylimit,
+                pageSize: 20,
+                pageIndex: 1,
+                extensions: 'all'
+            });
+
+            let currentPage = 1;
+            let total = 0;
+
+            function searchPage(page) {
+                if (!isRunning) return;
+
+                document.getElementById('progressInfo').textContent = `正在采集第 ${page} 页...`;
+
+                placeSearch.search(keywords, function(status, result) {
+                    if (!isRunning) return;
+
+                    if (status === 'complete') {
+                        const pois = result.poiList.pois;
+                        total = result.poiList.count;
+
+                        pois.forEach(poi => {
+                            allResults.push({
+                                '商家名称': poi.name,
+                                '地址': poi.address || '',
+                                '电话': poi.tel || '',
+                                '类目': poi.type || '',
+                                '城市': poi.pname || '',
+                                '区域': poi.cityname || poi.adname || '',
+                                '经度': poi.location ? poi.location.lng : '',
+                                '纬度': poi.location ? poi.location.lat : ''
+                            });
+                        });
+
+                        updateStats();
+                        renderTable();
+
+                        currentPage++;
+                        if (currentPage <= maxPages && allResults.length < total) {
+                            document.getElementById('progressInfo').textContent = `已采集 ${allResults.length} / ${total} 条，继续下一页...`;
+                            placeSearch.setPageIndex(currentPage);
+                            setTimeout(() => searchPage(currentPage), 500);
+                        } else {
+                            finish();
+                        }
+                    } else {
+                        document.getElementById('progressInfo').textContent = `搜索出错: ${status}，请检查Key类型和域名白名单`;
+                        finish();
+                    }
+                });
+            }
+
+            searchPage(1);
+        }
+
+        function stopSearch() {
+            isRunning = false;
+            document.getElementById('progressInfo').textContent = '已手动停止';
+            finish();
+        }
+
+        function finish() {
+            isRunning = false;
+            document.getElementById('startBtn').disabled = false;
+            document.getElementById('stopBtn').disabled = true;
+            document.getElementById('progressInfo').textContent = `采集完成！共 ${allResults.length} 条`;
+            document.getElementById('downloadBtns').style.display = 'flex';
+            document.getElementById('resultCard').style.display = 'block';
+        }
+
+        function updateStats() {
+            document.getElementById('stats').style.display = 'flex';
+            document.getElementById('totalNum').textContent = allResults.length;
+            document.getElementById('collectedNum').textContent = allResults.length;
+            const hasPhone = allResults.filter(r => r['电话']).length;
+            document.getElementById('hasPhoneNum').textContent = hasPhone;
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('resultBody');
+            tbody.innerHTML = '';
+            allResults.slice(0, 50).forEach((item, idx) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td>${item['商家名称']}</td>
+                    <td>${item['地址']}</td>
+                    <td>${item['电话']}</td>
+                    <td>${item['类目']}</td>
+                    <td>${item['区域']}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function downloadExcel() {
+            const ws = XLSX.utils.json_to_sheet(allResults);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "商家数据");
+            const timestamp = new Date().toISOString().slice(0,10);
+            XLSX.writeFile(wb, `高德商家_${timestamp}.xlsx`);
+        }
+
+        function downloadCSV() {
+            const headers = Object.keys(allResults[0]);
+            let csv = headers.join(',') + '\n';
+            allResults.forEach(row => {
+                csv += headers.map(h => `"${(row[h] || '').toString().replace(/"/g, '""')}"`).join(',') + '\n';
+            });
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `高德商家_${new Date().toISOString().slice(0,10)}.csv`;
+            a.click();
+        }
+    </script>
+</body>
+</html>
