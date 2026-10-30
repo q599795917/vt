@@ -1,5 +1,15 @@
 {
-  "version": "v2.12",
-  "url": "https://github.com/q599795917/vt/releases/download/v2.12/VT_Tool_Setup_v2.12.exe",
-  "note": "v2.12：表格工具修复谷歌辅助邮箱+2FA链接导入；自动提取 /2FA/ 后的令牌写入2FA密钥，同时保留完整2FA网址到打开指定网址，避免完整链接错误写入2FA字段。"
+  "latest_version": "1.58",
+  "download_url": "https://github.com/q599795917/Smart-Product-Photo-Studio/releases/download/v1.58/SmartProductStudio_Setup_v1.58.exe",
+  "notes": [
+    "批量生成时自动按子文件夹分组输出：选一个大文件夹（里面 N 个子文件夹），输出大文件夹里自动按相同子文件夹结构生成",
+    "保留 1.57 的大窗口缩略图风格选择、v1.56 的运行期到期自动踢出、v1.55 的 2K/4K 高清出图"
+  ],
+  "notice": {
+    "enabled": true,
+    "title": "v1.58 更新说明",
+    "content": "本次更新：\n1. 批量生成时自动按子文件夹分组输出——输入大文件夹里有几个子文件夹，输出大文件夹里就对应有几个子文件夹；\n2. 修复之前版本输出全堆在一个文件夹的问题。",
+    "once": true,
+    "id": "v1.58-20261030-subfolder-output"
+  }
 }
