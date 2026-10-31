@@ -1,15 +1,5 @@
 {
-  "latest_version": "1.58",
-  "download_url": "https://github.com/q599795917/Smart-Product-Photo-Studio/releases/download/v1.58/SmartProductStudio_Setup_v1.58.exe",
-  "notes": [
-    "批量生成时自动按子文件夹分组输出：选一个大文件夹（里面 N 个子文件夹），输出大文件夹里自动按相同子文件夹结构生成",
-    "保留 1.57 的大窗口缩略图风格选择、v1.56 的运行期到期自动踢出、v1.55 的 2K/4K 高清出图"
-  ],
-  "notice": {
-    "enabled": true,
-    "title": "v1.58 更新说明",
-    "content": "本次更新：\n1. 批量生成时自动按子文件夹分组输出——输入大文件夹里有几个子文件夹，输出大文件夹里就对应有几个子文件夹；\n2. 修复之前版本输出全堆在一个文件夹的问题。",
-    "once": true,
-    "id": "v1.58-20261030-subfolder-output"
-  }
+  "version": "v2.13",
+  "url": "https://github.com/q599795917/vt/releases/download/v2.13/VT_Tool_Setup_v2.13.exe",
+  "note": "v2.13：卡密验证整体切换至云端 CloudAuth 授权中心（39.108.181.194），744 张旧卡原样导入云端、不影响已发卡；激活/在线校验/换绑/远程禁用均走云端权威校验（vt 应用 v5 旧卡算法），断网或云端不可用时自动回退本地解析宽松放行。"
 }
