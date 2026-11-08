@@ -1,14 +1,19 @@
 {
-  "latest_version": "1.58",
-  "download_url": "https://github.com/q599795917/Smart-Product-Photo-Studio/releases/download/v1.58/SmartProductStudio_Setup_v1.58.exe",
+  "latest_version": "1.59",
+  "download_url": "https://github.com/q599795917/Smart-Product-Photo-Studio/releases/download/v1.59/SmartProductStudio_Setup_v1.59.exe",
   "notes": [
-    "按子文件夹分组输出修复"
+    "背景风格库大扩充：新导入 9963 条 vendor 场景 + 24385 条 assistant 场景，全部合并进现有商品类目",
+    "旧库一条不动：原有背景风格 100% 保留，只对新导入的部分按它自带的品类字段归类",
+    "本次导入的所有背景名称统一加 HH 前缀，方便在风格列表里一眼区分",
+    "类目从 12 个扩到 18 个：新增电子产品、首饰珠宝、运动户外、家电家具、其他百货、家纺布艺",
+    "大网格改为分批懒加载：切类目/切环境秒开，向下滚动自动续加载，不再一次性渲染上千张卡片",
+    "修复旧版小场景库覆盖新库的问题：自动比较两份库大小，始终加载更全的一份"
   ],
   "notice": {
     "enabled": true,
-    "title": "v1.58 更新说明",
-    "content": "本次更新：修复按子文件夹分组输出。",
+    "title": "v1.59 更新说明",
+    "content": "本次更新：\n1. 背景风格库大扩充——新导入 34348 条场景数据，原有背景全部原样保留；\n2. 新导入的背景全部带「HH」前缀，一眼区分新旧；\n3. 只按新导入数据自带的品类归类，新增电子产品、首饰珠宝、运动户外、家电家具、其他百货、家纺布艺 6 个类目（共 18 个）；\n4. 选择背景风格的大网格改为分批懒加载：切类目、切环境立刻响应，向下滚动继续加载；\n5. 修复旧版小库覆盖新库的问题。",
     "once": true,
-    "id": "v1.58-20261107-folder-group"
+    "id": "v1.59-20261108-scene-library-hh"
   }
 }
