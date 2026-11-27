@@ -16,7 +16,7 @@
     "once": true,
     "id": "v1.59-20261108-scene-library-hh"
   },
-  "version": "v2.20",
-  "url": "https://github.com/q599795917/vt/releases/download/v2.20/VT_Tool_Setup_v2.20.exe",
-  "note": "v2.20：修复部分客户机打开软件后整窗深蓝/空白（界面不显示）。启动前自动检测 Microsoft Edge WebView2 运行组件，缺失或损坏时自动静默安装修复；Win7/8 等不支持的系统给出明确提示，不再白屏。同时新增启动诊断日志（%LOCALAPPDATA%\\VT小工具\\start.log），页面 6 秒未渲染时自动重载并回退内联页面，最终失败也会显示可读错误提示。"
+  "version": "v2.21",
+  "url": "https://github.com/q599795917/vt/releases/download/v2.21/VT_Tool_Setup_v2.21.exe",
+  "note": "v2.21：继续修复部分客户机打开后整窗深蓝、界面不显示（WebView2 已安装但页面没渲染出来的情况）。启动先显示“正在加载界面”启动页，再导航到主页面；若 8 秒内没渲染出来，自动依次改用 127.0.0.1、localhost、本地文件三种方式重试，并记录详细诊断日志。最终失败显示可读提示，不再是一片纯色空白。"
 }
