@@ -16,7 +16,7 @@
     "once": true,
     "id": "v1.59-20261108-scene-library-hh"
   },
-  "version": "v2.19",
-  "url": "https://github.com/q599795917/vt/releases/download/v2.19/VT_Tool_Setup_v2.19.exe",
-  "note": "v2.19：修复「系统推荐」颜色模式下选完推荐色后又乱点乱跳。推荐标签只在颜色面板内识别，点击定位到外层颜色复选框并按其勾选态判断，不再点内层标签导致冒泡误切换；取消默认色与回读已勾色全部限定在颜色面板内、仅操作真正已勾选的外层项并按颜色 id 去重，未勾选项不再被误勾上；站点已有推荐色时不再叠加点击填写颜色。"
+  "version": "v2.20",
+  "url": "https://github.com/q599795917/vt/releases/download/v2.20/VT_Tool_Setup_v2.20.exe",
+  "note": "v2.20：修复部分客户机打开软件后整窗深蓝/空白（界面不显示）。启动前自动检测 Microsoft Edge WebView2 运行组件，缺失或损坏时自动静默安装修复；Win7/8 等不支持的系统给出明确提示，不再白屏。同时新增启动诊断日志（%LOCALAPPDATA%\\VT小工具\\start.log），页面 6 秒未渲染时自动重载并回退内联页面，最终失败也会显示可读错误提示。"
 }
